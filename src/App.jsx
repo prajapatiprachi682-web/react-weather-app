@@ -44,6 +44,20 @@ function App() {
 
   };
 
+  const today = new Date();
+
+const date = today.toLocaleDateString("en-IN", {
+  weekday: "long",
+  day: "numeric",
+  month: "long",
+  year: "numeric",
+});
+
+const time = today.toLocaleTimeString([], {
+  hour: "2-digit",
+  minute: "2-digit",
+});
+
   return (
 
     <div className="container">
@@ -59,6 +73,11 @@ function App() {
             placeholder="Enter city name"
             value={city}
             onChange={(e) => setCity(e.target.value)}
+             onKeyDown={(e) => {
+    if (e.key === "Enter") {
+      getWeather();
+    }
+  }}
           />
 
           <button onClick={getWeather}>
@@ -83,10 +102,15 @@ function App() {
             <h2>{weather.name}</h2>
 
             <h3>{weather.main.temp.toFixed(1)}°C</h3>
+            <p className="description">
+  {weather.weather[0].description}
+</p>
 
             <div className="details">
 
               <div>
+                <p>{date}</p>
+                <p>{time}</p>
                 <p>Humidity</p>
                 <h4>{weather.main.humidity}%</h4>
               </div>
@@ -95,7 +119,16 @@ function App() {
                 <p>Wind</p>
                 <h4>{(weather.wind.speed * 3.6).toFixed(1)} km/h</h4>
               </div>
-
+              <div>
+  <p>Feels Like</p>
+  <h4>{weather.main.feels_like}°C</h4>
+</div>
+<div>
+  <p>Pressure</p>
+  <h4>{weather.main.pressure} hPa</h4>
+</div>
+<p>{weather.sys.country}</p>
+<p>{weather.weather[0].main}</p>hj
             </div>
 
           </div>
