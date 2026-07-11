@@ -2,22 +2,24 @@ import "./App.css";
 import axios from "axios";
 import { useState } from "react";
 
-function App() {
+import SearchBar from "./components/SearchBar";
+import WeatherCard from "./components/WeatherCard";
+import Loader from "./components/Loader";
+import ErrorMessage from "./components/ErrorMessage";
 
+function App() {
   const [city, setCity] = useState("");
   const [weather, setWeather] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
   const getWeather = async () => {
-
     if (city.trim() === "") {
       setError("Please enter a city");
       return;
     }
 
     try {
-
       setLoading(true);
       setError("");
 
@@ -28,117 +30,85 @@ function App() {
       const response = await axios.get(url);
 
       setWeather(response.data);
-
-    }
-    catch (err) {
-
+    } catch (err) {
       setError("City not found");
       setWeather(null);
-
-    }
-    finally {
-
+    } finally {
       setLoading(false);
+    }
+  };
 
+  const getCurrentLocation = () => {
+    if (!navigator.geolocation) {
+      setError("Geolocation is not supported.");
+      return;
     }
 
+    navigator.geolocation.getCurrentPosition(
+      async (position) => {
+        try {
+          setLoading(true);
+          setError("");
+
+          const { latitude, longitude } = position.coords;
+
+          const apiKey = import.meta.env.VITE_WEATHER_API_KEY;
+
+          const url = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=metric`;
+
+          const response = await axios.get(url);
+
+          setWeather(response.data);
+          setCity(response.data.name);
+        } catch (err) {
+          setError("Unable to fetch location weather.");
+        } finally {
+          setLoading(false);
+        }
+      },
+      () => {
+        setError("Location permission denied.");
+      }
+    );
   };
 
   const today = new Date();
 
-const date = today.toLocaleDateString("en-IN", {
-  weekday: "long",
-  day: "numeric",
-  month: "long",
-  year: "numeric",
-});
+  const date = today.toLocaleDateString("en-IN", {
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
 
-const time = today.toLocaleTimeString([], {
-  hour: "2-digit",
-  minute: "2-digit",
-});
+  const time = today.toLocaleTimeString([], {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
 
   return (
-
     <div className="container">
-
       <div className="weather-card">
-
         <h1>Weather App</h1>
 
-        <div className="search-box">
+        <SearchBar
+          city={city}
+          setCity={setCity}
+          getWeather={getWeather}
+          getCurrentLocation={getCurrentLocation}
+        />
 
-          <input
-            type="text"
-            placeholder="Enter city name"
-            value={city}
-            onChange={(e) => setCity(e.target.value)}
-             onKeyDown={(e) => {
-    if (e.key === "Enter") {
-      getWeather();
-    }
-  }}
-          />
+        {loading && <Loader />}
 
-          <button onClick={getWeather}>
-            Search
-          </button>
+        <ErrorMessage error={error} />
 
-        </div>
-
-        {loading && <p>Loading...</p>}
-
-        {error && <p style={{ color: "red" }}>{error}</p>}
-
-        {weather && (
-
-          <div className="weather-info">
-
-            <img
-              src={`https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}
-              alt="weather"
-            />
-
-            <h2>{weather.name}</h2>
-
-            <h3>{weather.main.temp.toFixed(1)}°C</h3>
-            <p className="description">
-  {weather.weather[0].description}
-</p>
-
-            <div className="details">
-
-              <div>
-                <p>{date}</p>
-                <p>{time}</p>
-                <p>Humidity</p>
-                <h4>{weather.main.humidity}%</h4>
-              </div>
-
-              <div>
-                <p>Wind</p>
-                <h4>{(weather.wind.speed * 3.6).toFixed(1)} km/h</h4>
-              </div>
-              <div>
-  <p>Feels Like</p>
-  <h4>{weather.main.feels_like}°C</h4>
-</div>
-<div>
-  <p>Pressure</p>
-  <h4>{weather.main.pressure} hPa</h4>
-</div>
-<p>{weather.sys.country}</p>
-<p>{weather.weather[0].main}</p>hj
-            </div>
-
-          </div>
-
-        )}
-
+        <WeatherCard
+          weather={weather}
+          date={date}
+          time={time}
+        />
       </div>
-
     </div>
-
   );
 }
 
