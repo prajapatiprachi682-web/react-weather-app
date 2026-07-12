@@ -1,16 +1,84 @@
-# React + Vite
+# 🌦️ Weather App
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+A modern and responsive Weather Application built using React.js and OpenWeather API. Users can search weather information for any city, view a 5-day forecast, and get weather updates based on their current location.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## 🚀 Live Demo
 
-## React Compiler
+🔗 https://prachi-weather-project-2026.netlify.app
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the Oxlint configuration
+## 📸 Preview
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+<img width="900" alt="Weather App" src="https://via.placeholder.com/900x500?text=Weather+App+Preview">
+
+---
+
+## ✨ Features
+
+- 🔍 Search weather by city
+- 📍 Current Location Weather
+- 🌡️ Live Temperature
+- 💧 Humidity
+- 💨 Wind Speed
+- 🌅 Sunrise & Sunset
+- 📅 5-Day Weather Forecast
+- 📱 Responsive UI
+- ⚡ Fast Loading
+
+---
+
+## 🛠️ Tech Stack
+
+- React.js
+- Vite
+- JavaScript
+- CSS3
+- Axios
+- OpenWeather API
+- Netlify
+
+---
+
+## 📦 Installation
+
+```bash
+git clone https://github.com/prajapatiprachi682-web/react-weather-app.git
+
+cd react-weather-app
+
+npm install
+
+npm run dev
+```
+
+---
+
+## 📁 Folder Structure
+
+```
+src/
+ ├── components/
+ ├── assets/
+ ├── App.jsx
+ ├── App.css
+ ├── main.jsx
+```
+
+---
+
+## 👩‍💻 Author
+
+**Prachi Prajapati**
+
+GitHub:
+https://github.com/prajapatiprachi682-web
+
+LinkedIn:
+(Add your LinkedIn profile here)
+
+---
+
+⭐ If you like this project, don't forget to star this repository.
