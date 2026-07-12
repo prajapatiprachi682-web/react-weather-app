@@ -5,22 +5,25 @@ function WeatherCard({ weather, date, time }) {
     <div className="weather-info">
 
       <img
-        className="weather-icon"
-        src={`https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}
-        alt="weather"
-      />
+  src={`https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}
+  alt="weather"
+/>
 
-      <h2 className="city">{weather.name}</h2>
+<h2 className="city">
+  {weather.name}
+</h2>
 
-      <p className="country">{weather.sys.country}</p>
+<p className="country">
+  {weather.sys.country}
+</p>
 
-      <h1 className="temperature">
-        {Math.round(weather.main.temp)}°C
-      </h1>
+<h1 className="temperature">
+  {Math.round(weather.main.temp)}°C
+</h1>
 
-      <p className="description">
-        {weather.weather[0].description}
-      </p>
+<p className="description">
+  {weather.weather[0].description}
+</p>
 
       <div className="date-time">
         <p>{date}</p>

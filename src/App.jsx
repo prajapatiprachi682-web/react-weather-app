@@ -1,3 +1,4 @@
+import Forecast from "./components/Forecast";
 import "./App.css";
 import axios from "axios";
 import { useState } from "react";
@@ -10,6 +11,7 @@ import ErrorMessage from "./components/ErrorMessage";
 function App() {
   const [city, setCity] = useState("");
   const [weather, setWeather] = useState(null);
+  const [forecast, setForecast] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -30,6 +32,12 @@ function App() {
       const response = await axios.get(url);
 
       setWeather(response.data);
+      const forecastUrl =
+`https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=metric`;
+
+const forecastResponse = await axios.get(forecastUrl);
+
+setForecast(forecastResponse.data.list);
     } catch (err) {
       setError("City not found");
       setWeather(null);
@@ -90,6 +98,7 @@ function App() {
     <div className="container">
       <div className="weather-card">
         <h1>Weather App</h1>
+        
 
         <SearchBar
           city={city}
@@ -107,6 +116,7 @@ function App() {
           date={date}
           time={time}
         />
+        <Forecast forecast={forecast} />
       </div>
     </div>
   );
