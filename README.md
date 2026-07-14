@@ -77,7 +77,7 @@ GitHub:
 https://github.com/prajapatiprachi682-web
 
 LinkedIn:
-(Add your LinkedIn profile here)
+https://www.linkedin.com/in/prachi-prajapati-b22b71328/
 
 ---
 
